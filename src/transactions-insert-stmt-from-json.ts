@@ -27,7 +27,8 @@ const TRANSACTIONS_TABLE_JSON_MAPPING = {
   bank: (data: FullTransactionData) => `"${data.bank}"`,
   account: (data: FullTransactionData) => `"${data.account}"`,
   desc: (data: FullTransactionData) => `"${data.description}"`,
-  amount: (data: FullTransactionData) => data.amountInZAR
+  amount: (data: FullTransactionData) => data.amountInZAR,
+  timestamp: (data: FullTransactionData) => `"${data.timeStamp}"`
 };
 
 const transactionToSqliteInsertValue = (bank: string, account: string) => (
