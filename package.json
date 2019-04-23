@@ -1,0 +1,29 @@
+{
+  "name": "parse-bank-statement",
+  "version": "1.0.0",
+  "description": "Parse a bank statement and output JSON",
+  "main": "index.js",
+  "author": "Emerick Bosch <xpc.dev@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^2.19.0",
+    "moment": "^2.24.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.4.0",
+    "@babel/preset-typescript": "^7.3.3",
+    "@types/jest": "^24.0.11",
+    "@types/node": "^11.9.5",
+    "babel-jest": "^24.5.0",
+    "jest": "^24.5.0",
+    "ts-jest": "^24.0.0",
+    "typescript": "^3.3.3333"
+  },
+  "scripts": {
+    "build": "yarn run clean && mkdir -p build && tsc",
+    "parse": "node build/index.js",
+    "clean": "rm -rf build",
+    "test": "yarn build && jest"
+  },
+  "bin": "./src/index.js"
+}
