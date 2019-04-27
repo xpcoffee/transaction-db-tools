@@ -26,15 +26,13 @@ async function main(program) {
     }
 
     const statement: Statement = JSON.parse(content);
-    const transactionToSql = getSqlTransform(statement.bank, statement.account);
+    const jsonToSql = toSqlValueWith(statement.bank, statement.account);
 
-    const columns = Object.keys(TRANSACTIONS_TABLE_JSON_MAPPING);
-    const values = statement.transactions.map(transactionToSql);
+    const columns = Object.keys(JSON_TO_SQL_VALUE_MAP).join(",");
+    const values = statement.transactions.map(jsonToSql).join(",");
 
     console.log(
-      `INSERT INTO ${TRANSACTIONS_TABLE} (${columns.join(
-        ","
-      )}) VALUES ${values.join(",")}`
+      `INSERT INTO ${TRANSACTIONS_TABLE} (${columns}) VALUES ${values}`
     );
   } catch (e) {
     console.error(`[ERROR] ${e}`);
@@ -61,7 +59,7 @@ function getContent(program): Promise<string> {
 }
 
 /**
- * This interface represents the total data needed to insert a transaction into the DB.
+ * Represents the total data needed to insert a transaction into the DB.
  * JSON transactions don't have the bank and account at a row level - these need to be added.
  */
 interface FullTransactionData extends Transaction {
@@ -71,8 +69,11 @@ interface FullTransactionData extends Transaction {
 
 const TRANSACTIONS_TABLE = "transactions";
 
-// Functions that map JSON fields to their respective fields in the transactions table.
-const TRANSACTIONS_TABLE_JSON_MAPPING = {
+/**
+ *  Holds functions that map JSON transaction values to values needed in the SQL statement.
+ */
+
+const JSON_TO_SQL_VALUE_MAP = {
   id: (data: FullTransactionData) =>
     `"${data.timeStamp}${data.bank}${data.account}${data.hash}"`,
   bank: (data: FullTransactionData) => `"${data.bank}"`,
@@ -83,20 +84,24 @@ const TRANSACTIONS_TABLE_JSON_MAPPING = {
 };
 
 // Function to map JSON transaction to SQL values
-function toSqlValues(data: FullTransactionData) {
-  return Object.values(TRANSACTIONS_TABLE_JSON_MAPPING).map(mappingFn =>
-    mappingFn(data)
-  );
+/**
+ * Transform a JSON transaction to the value-row string required in the SQL statement;
+ * @param data
+ */
+function toSqlValue(data: FullTransactionData) {
+  const values = Object.values(JSON_TO_SQL_VALUE_MAP)
+    .map(mappingFn => mappingFn(data))
+    .join(",");
+  return `(${values})`;
 }
 
 /**
- * Creates a function that can transform a transaction into a value that
- * can be used in a SQL inserts statement.
+ * Pre-populates part of the FullTransactionData used in the toSqlValue transform.
  *
  * @param bank  The transaction's bank.
  * @param account  The transaction's account.
  */
-function getSqlTransform(bank: string, account: string) {
+function toSqlValueWith(bank: string, account: string) {
   return (transaction: Transaction): string => {
     // Collect all the data needed
     const data: FullTransactionData = {
@@ -105,7 +110,7 @@ function getSqlTransform(bank: string, account: string) {
       ...transaction
     };
 
-    return `(${toSqlValues(data).join(",")})`;
+    return toSqlValue(data);
   };
 }
 
