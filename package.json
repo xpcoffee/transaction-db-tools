@@ -1,8 +1,11 @@
 {
-  "name": "parse-bank-statement",
+  "name": "transaction-db-tools",
   "version": "1.0.0",
-  "description": "Parse a bank statement and output JSON",
-  "main": "index.js",
+  "description": "Tools to help manage a transactions database",
+  "main": "./src/json-to-sql.ts",
+  "bin": {
+    "json-to-sql": "./build/json-to-sql.js"
+  },
   "author": "Emerick Bosch <xpc.dev@gmail.com>",
   "license": "MIT",
   "dependencies": {
@@ -24,6 +27,5 @@
     "parse": "node build/index.js",
     "clean": "rm -rf build",
     "test": "yarn build && jest"
-  },
-  "bin": "./src/index.js"
+  }
 }
