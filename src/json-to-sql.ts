@@ -5,10 +5,10 @@ import { Statement, Transaction } from "./types";
 // Parse command-line input
 program
   .version("1.0.0")
-  .usage("<json-data> | --statement-file <file>")
+  .usage("<json-data> | --file <file>")
   .option(
-    "-f, --statement-file <file>",
-    "File containing a JSON bank statement"
+    "-f, --file <file>",
+    "Path to the file containing a JSON bank statement"
   )
   .option("<json-data>", "JSON bank statement data")
   .parse(process.argv);
@@ -40,9 +40,9 @@ async function main(program) {
 }
 
 function getContent(program): Promise<string> {
-  if (program.statementFile) {
+  if (program.file) {
     return new Promise((resolve, reject) =>
-      fs.readFile(program.statementFile, { encoding: "utf8" }, (err, data) => {
+      fs.readFile(program.file, { encoding: "utf8" }, (err, data) => {
         err ? reject(err) : resolve(data);
       })
     );
