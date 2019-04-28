@@ -80,7 +80,8 @@ const JSON_TO_SQL_VALUE_MAP = {
   account: (data: FullTransactionData) => `"${data.account}"`,
   desc: (data: FullTransactionData) => `"${data.description}"`,
   amount: (data: FullTransactionData) => data.amountInZAR,
-  timestamp: (data: FullTransactionData) => `"${data.timeStamp}"`
+  timestamp: (data: FullTransactionData) => `"${data.timeStamp}"`,
+  balance: (data: FullTransactionData) => data.balance
 };
 
 // Function to map JSON transaction to SQL values
