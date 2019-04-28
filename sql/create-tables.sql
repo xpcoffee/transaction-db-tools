@@ -4,5 +4,6 @@ CREATE TABLE transactions (
     bank,
     account,
     amount REAL,
+    balance REAL,
     desc
 )
