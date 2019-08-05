@@ -27,6 +27,6 @@ yarn build
 Example using SQLite:
 
 ```bash
-node build/transactions-insert-stmt-from-json.js -f /path/to/json-statment.json > output.sql
+node build/transactions-insert-stmt-from-json.js -f /path/to/json-statement.json > output.sql
 sqlite -header transactions < output.sql
 ```
