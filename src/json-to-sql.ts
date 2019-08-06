@@ -32,7 +32,7 @@ async function main(program) {
     const values = statement.transactions.map(jsonToSql).join(",");
 
     console.log(
-      `INSERT INTO ${TRANSACTIONS_TABLE} (${columns}) VALUES ${values}`
+      `INSERT INTO ${TRANSACTIONS_TABLE} (${columns}) VALUES ${values};`
     );
   } catch (e) {
     console.error(`[ERROR] ${e}`);
