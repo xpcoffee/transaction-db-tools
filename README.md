@@ -28,5 +28,11 @@ Example using SQLite:
 
 ```bash
 node build/json-to-sql.js -f /path/to/json-statement.json > output.sql
-sqlite -header transactions < output.sql
+sqlite3 -header transactions.sqlite < output.sql
+```
+
+## Installing the binary on your system
+
+```bash
+npm link
 ```
