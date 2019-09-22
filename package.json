@@ -23,9 +23,9 @@
     "typescript": "^3.3.3333"
   },
   "scripts": {
-    "build": "yarn run clean && mkdir -p build && tsc",
+    "build": "npm run clean && mkdir -p build && tsc",
     "parse": "node build/index.js",
     "clean": "rm -rf build",
-    "test": "yarn build && jest"
+    "test": "jest"
   }
 }

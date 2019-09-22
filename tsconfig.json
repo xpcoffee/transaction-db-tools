@@ -3,6 +3,8 @@
   "exclude": ["./node_modules"],
   "compilerOptions": {
     "strictNullChecks": true,
-    "outDir": "./build"
+    "outDir": "./build",
+    "target": "es6",
+    "lib": ["es2015", "es2017", "dom"]
   }
 }
