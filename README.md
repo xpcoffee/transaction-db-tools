@@ -6,6 +6,28 @@ Related resources:
 
 - [https://github.com/xpcoffee/bank-statement-parse](bank-statement-parse) - turns bank statements into a standard JSON output
 
+## Clone, build and install
+
+
+Clone
+
+```bash
+git clone git@github.com:xpcoffee/transaction-db-tools.git \
+&& cd transaction-db-tools
+```
+
+Build and install the binaries
+```bash
+npm build && \
+npm -g install
+```
+
+Try it out
+
+```bash
+json-to-sql --help
+```
+
 ## Creating the transaction database tables
 
 Use `create-tables.sql`.
@@ -13,13 +35,8 @@ Use `create-tables.sql`.
 Example using SQLite:
 
 ```bash
+cd sql
 sqlite3 transactions.sqlite < create-tables.sql
-```
-
-## Building the project
-
-```bash
-yarn build
 ```
 
 ## Insert transactions from a standard JSON statement
