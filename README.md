@@ -59,3 +59,12 @@ for file in $(find ~/tmp/ -type f); do; sqlite3 transactions.sqlite < <(json-to-
 ```bash
 npm link
 ```
+
+## Usage with other libraries
+
+To insert files from scratch:
+
+```bash
+statement="/path/to/statement.csv"
+sqlite3 transactions.sql < <(json-to-sql -f <(parse-bank-statement -b fnb -f "$statement"))
+```
