@@ -2,12 +2,7 @@
 
 These are utilities to work with a DB of transactions. This README serves as a playbook.
 
-Related resources:
-
-- [https://github.com/xpcoffee/bank-statement-parse](bank-statement-parse) - turns bank statements into a standard JSON output
-
 ## Clone, build and install
-
 
 Clone
 
@@ -22,47 +17,25 @@ npm build && \
 npm -g install
 ```
 
-Try it out
-
-```bash
-json-to-sql --help
-```
-
 ## Creating the transaction database tables
-
-Use `create-tables.sql`.
-
-Example using SQLite:
 
 ```bash
 cd sql
 sqlite3 transactions.sqlite < create-tables.sql
 ```
 
-## Insert transactions from a standard JSON statement
+## Insert data
 
-Example using SQLite:
-
-```bash
-node build/json-to-sql.js -f /path/to/json-statement.json > output.sql
-sqlite3 -header transactions.sqlite < output.sql
-```
-
-Example for multiple files
+`json-to-sql` turns `bank-schema` JSON into SQL INSERT statements
 
 ```bash
-for file in $(find ~/tmp/ -type f); do; sqlite3 transactions.sqlite < <(json-to-sql -f $file); done
+# example using SQLite:
+sqlite3 transactions.sql < <(json-to-sql -f /path/to/json-statement.json)
 ```
 
-## Installing the binary on your system
+**Usage with `parse-bank-statement`**
 
-```bash
-npm link
-```
-
-## Usage with other libraries
-
-To insert files from scratch:
+[parse-bank-statement](https://github.com/xpcoffee/parse-bank-statement) provides a script that's able to take bank CSVs and produce data that complies with [bank-schema](https://github.com/xpcoffee/bank-schema). Together with these tools, a single command can be used to insert statements into a data-store.
 
 ```bash
 statement="/path/to/statement.csv"
